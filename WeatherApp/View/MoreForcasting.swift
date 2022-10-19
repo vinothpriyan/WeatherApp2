@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MoreForcasting: View {
+    let currentData: CurrentData
     var body: some View {
         HStack{
             Spacer()
@@ -22,7 +23,7 @@ struct MoreForcasting: View {
                     .fontWeight(.semibold)
                     .font(.body)
                 
-                Text("Very Low")
+                Text(String(format: "%.1f", currentData.uv))
                     .fontWeight(.thin)
                     .font(.caption)
                 
@@ -40,7 +41,7 @@ struct MoreForcasting: View {
                     .fontWeight(.semibold)
                     .font(.body)
                 
-                Text("10 km/h")
+                Text(String(format: "%.1f km/h", currentData.wind_kph))
                     .fontWeight(.thin)
                     .font(.caption)
                 
@@ -58,7 +59,7 @@ struct MoreForcasting: View {
                     .fontWeight(.semibold)
                     .font(.body)
                 
-                Text("60%")
+                Text("\(currentData.humidity)%")
                     .fontWeight(.thin)
                     .font(.caption)
                 
@@ -73,8 +74,8 @@ struct MoreForcasting: View {
     }
 }
 
-struct MoreForcasting_Previews: PreviewProvider {
-    static var previews: some View {
-        MoreForcasting()
-    }
-}
+//struct MoreForcasting_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MoreForcasting()
+//    }
+//}

@@ -37,7 +37,8 @@ struct TopWeatherView: View{
             
             HStack(spacing: 0){
                 VStack{
-                    Text("\(self.currentWeatherData.responseweatherData?.current.temp_c ?? 0)° ")
+                    
+                    Text("\(Int(self.currentWeatherData.responseweatherData?.current.temp_c ?? 0))°")
                         .fontWeight(.semibold)
                         .font(.largeTitle)
                         .foregroundColor(.gray)
@@ -48,12 +49,12 @@ struct TopWeatherView: View{
                         .foregroundColor(.gray)
                         .padding(.leading, 10)
                     
-                    Text("\(self.currentWeatherData.responseweatherData?.current.temp_c ?? 0)°/\(self.currentWeatherData.responseweatherData?.current.temp_f ?? 0)° Feels like \(self.currentWeatherData.responseweatherData?.current.feelslike_c ?? 0)°")
+                    Text("\(Int(self.currentWeatherData.responseweatherData?.current.temp_c ?? 0))°/\(Int(self.currentWeatherData.responseweatherData?.current.temp_f ?? 0))° Feels like \(Int(self.currentWeatherData.responseweatherData?.current.feelslike_c ?? 0))°")
                         .fontWeight(.semibold)
                         .font(.caption)
                         .foregroundColor(.gray)
                         .padding(.leading, 10)
-                    Text(self.currentWeatherData.responseweatherData?.location.localtime ?? "")
+                    Text("\(DateFormatter.localizedString(from: self.currentWeatherData.responseweatherData?.location.localtime_epoch ?? Date(), dateStyle: .none, timeStyle: .short))")
                         .fontWeight(.semibold)
                         .font(.caption)
                         .foregroundColor(.gray)
@@ -81,7 +82,7 @@ struct TopWeatherView: View{
                 
                 CurrentDayForcast()
                     .padding(8)
-                    .background(Color.blue.opacity(0.3))
+                    .background(Color.accentColor.opacity(0.3))
                     .cornerRadius(10)
                     .padding(8)
                 
@@ -91,14 +92,15 @@ struct TopWeatherView: View{
                 
                 SevenDaysForcast()
                     .padding(8)
-                    .background(Color.blue.opacity(0.3))
+                    .background(Color.accentColor.opacity(0.3))
                     .cornerRadius(10)
                     .padding(6)
                 
                 SunForcasting()
                 
-                MoreForcasting()
-                
+                if let currentData = self.currentWeatherData.responseweatherData?.current{
+                    MoreForcasting(currentData: currentData)
+                }
             }
         }.onAppear{
             self.currentWeatherData.fetchedRecords()
