@@ -11,9 +11,7 @@ struct TopWeatherView: View{
     @ObservedObject var currentWeatherData: WeatherDataViewModel = WeatherDataViewModel()
     @State private var customLocation: String = ""
     var body: some View{
-        
         VStack{
-            
             HStack{
                 TextField("Location", text: $customLocation)
                     .font(.headline)
@@ -80,11 +78,14 @@ struct TopWeatherView: View{
                     .fontWeight(.bold)
                     .font(.callout)
                 
-                CurrentDayForcast()
-                    .padding(8)
-                    .background(Color.accentColor.opacity(0.3))
-                    .cornerRadius(10)
-                    .padding(8)
+                if let hourly = self.currentWeatherData.responseweatherData?.forecast.forecastday{
+                    HourlyForcast(hourlyData: hourly[0].hour)
+                        .padding(8)
+                        .background(Color.accentColor.opacity(0.3))
+                        .cornerRadius(10)
+                        .padding(8)
+                    
+                }
                 
                 Text("For This Week")
                     .fontWeight(.bold)
@@ -96,7 +97,9 @@ struct TopWeatherView: View{
                     .cornerRadius(10)
                     .padding(6)
                 
-                SunForcasting()
+                if let astro = self.currentWeatherData.responseweatherData?.forecast.forecastday{
+                    SunForcasting(astroData: astro[0].astro)
+                }
                 
                 if let currentData = self.currentWeatherData.responseweatherData?.current{
                     MoreForcasting(currentData: currentData)

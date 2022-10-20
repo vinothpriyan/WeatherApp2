@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct SunForcasting: View {
+    
+    let astroData: Astro
+    
     var body: some View {
         HStack{
             Spacer()
@@ -17,7 +20,7 @@ struct SunForcasting: View {
                     .fontWeight(.semibold)
                     .font(.body)
                 
-                Text("05.04 am")
+                Text(astroData.sunrise)
                     .fontWeight(.semibold)
                     .font(.caption)
                 
@@ -34,7 +37,7 @@ struct SunForcasting: View {
                     .fontWeight(.semibold)
                     .font(.body)
                 
-                Text("17.59 pm")
+                Text(astroData.sunset)
                     .fontWeight(.semibold)
                     .font(.caption)
                 
@@ -50,11 +53,5 @@ struct SunForcasting: View {
         .background(Color.white.opacity(0.6))
         .cornerRadius(10)
         .padding(6)
-    }
-}
-
-struct SunForcasting_Previews: PreviewProvider {
-    static var previews: some View {
-        SunForcasting()
     }
 }
