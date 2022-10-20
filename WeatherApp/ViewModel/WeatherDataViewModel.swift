@@ -11,30 +11,27 @@ import Combine
 public class WeatherDataViewModel: ObservableObject{
     
     @Published var responseweatherData: WeatherDataModel?
+    @Published var faledRespons: String?
     private var weatherJSONData = FetchLiveWeatherData()
     private var cancelable: AnyCancellable?
     
     
     public func fetchedRecords(searchLocation: String = "Chennai"){
         
-        self.cancelable = weatherJSONData.fetchWeatherData(location: searchLocation)
+        self.cancelable = weatherJSONData.fetchWeatherData(location: searchLocation, numberof: 7)
             .sink(receiveCompletion: { error in
                 switch error{
                     
                 case .finished:
                     print("Request finished")
                 case .failure(let errorIs):
+                    self.faledRespons = errorIs.localizedDescription
                     print("Request failed with error \(errorIs.localizedDescription)")
                 }
                 
             }, receiveValue: { [weak self] responsedWeatherData in
                 DispatchQueue.main.async {
                     self?.responseweatherData = responsedWeatherData
-                    if #available(iOS 15.0, *) {
-                        print(" The record is \(responsedWeatherData.location.region)")
-                    } else {
-                        // Fallback on earlier versions
-                    }
                 }
             })
     }

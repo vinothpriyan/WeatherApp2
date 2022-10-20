@@ -10,7 +10,6 @@ import SwiftUI
 struct HourlyForcast: View {
     
     let hourlyData: [HourlyData]
-    @ObservedObject var imageLoader = ImageLoader()
     @State var image: UIImage?
 
     var body: some View {
@@ -22,34 +21,29 @@ struct HourlyForcast: View {
                             .fontWeight(.medium)
                             .font(.caption)
                         
-                        Image(uiImage: (image ?? UIImage(systemName: "cloud.fill"))!)
+                        Image(systemName: "cloud.fill")
                             .resizable()
                             .foregroundColor(.white)
                             .frame(width: 30, height: 20)
-                            .onReceive(imageLoader.$data) { imgData in
-                                //guard let img = imgData else{return}
-                                self.image = UIImage(data: imgData)
-                            }
-                        
-                        Text(String(format: "%.1f", hourlyForcast.temp_c))
+                            
+                        Text(String(format: "%.0f°", hourlyForcast.temp_c))
                             .fontWeight(.medium)
                             .font(.caption)
                         
-                        Text(String(format: "%.1f", hourlyForcast.temp_f))
-                            .fontWeight(.medium)
-                            .font(.caption)
+                        HStack{
+                            Image(systemName: "cloud.rain.fill")
+                                .resizable()
+                                .foregroundColor(.white)
+                                .frame(width: 15, height: 15)
+                            
+                            Text("\(Int(hourlyForcast.humidity))%")
+                                .fontWeight(.thin)
+                                .font(.caption)
+                        }
+                        
                     }.padding(8)
-                    .onAppear{
-                        self.imageLoader.loadImage(urlString: hourlyForcast.condition.icon)
-                    }
                 }
             }
         }
     }
 }
-
-//struct HourlyForcast_Previews: PreviewProvider {
-//    static var previews: some View {
-//        HourlyForcast()
-//    }
-//}

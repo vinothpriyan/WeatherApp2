@@ -10,6 +10,8 @@ import SwiftUI
 struct TopWeatherView: View{
     @ObservedObject var currentWeatherData: WeatherDataViewModel = WeatherDataViewModel()
     @State private var customLocation: String = ""
+    @State private var celsiasIsActive: Bool = false
+    
     var body: some View{
         VStack{
             HStack{
@@ -18,12 +20,14 @@ struct TopWeatherView: View{
                     .foregroundColor(.black)
                 
                 Button {
-                    self.currentWeatherData.fetchedRecords(searchLocation: customLocation)
+                    withAnimation(.easeIn) {
+                        self.currentWeatherData.fetchedRecords(searchLocation: customLocation)
+                    }
                 } label: {
                     Image(systemName: "magnifyingglass.circle.fill")
                         .resizable()
                         .frame(width: 25, height: 25)
-                }
+                }.disabled(customLocation.isEmpty ? true: false)
             }
             .padding(8)
             .background(Color.white.opacity(0.6))
@@ -91,11 +95,13 @@ struct TopWeatherView: View{
                     .fontWeight(.bold)
                     .font(.callout)
                 
-                SevenDaysForcast()
-                    .padding(8)
-                    .background(Color.accentColor.opacity(0.3))
-                    .cornerRadius(10)
-                    .padding(6)
+                if let daysForcast = self.currentWeatherData.responseweatherData?.forecast{
+                    SevenDaysForcast(forcastDay: daysForcast.forecastday)
+                        .padding(8)
+                        .background(Color.accentColor.opacity(0.3))
+                        .cornerRadius(10)
+                        .padding(6)
+                }
                 
                 if let astro = self.currentWeatherData.responseweatherData?.forecast.forecastday{
                     SunForcasting(astroData: astro[0].astro)

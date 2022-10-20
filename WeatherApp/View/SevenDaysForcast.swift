@@ -8,14 +8,19 @@
 import SwiftUI
 
 struct SevenDaysForcast: View {
+    
+    let forcastDay: [ForcastDay]
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 10){
-                ForEach(0..<7) { hourlyForcast in
+                ForEach(forcastDay, id: \.self) { dayForcast in
                     HStack(spacing: 30){
-                        Text("18 Nov 22")
+                        Text("\(customDate(date: dayForcast.date_epoch))")
                             .fontWeight(.medium)
                             .font(.caption)
+                        
+                        Spacer()
                         
                         HStack{
                             Image(systemName: "cloud.drizzle.fill")
@@ -23,10 +28,10 @@ struct SevenDaysForcast: View {
                                 .font(.caption)
                                 .frame(width: 10, height: 10)
                             
-                            Text("59%")
-                                .fontWeight(.semibold)
+                            Text("\(Int(dayForcast.day.avghumidity))%")
+                                .fontWeight(.thin)
                                 .font(.system(size: 8))
-                        }
+                        }.frame(minWidth: 40)
                         
                         Image(systemName: "cloud.drizzle.fill")
                             .resizable()
@@ -38,11 +43,11 @@ struct SevenDaysForcast: View {
                             .foregroundColor(.yellow)
                             .frame(width: 20, height: 20)
                         
-                        Text("90° f")
+                        Text(String(format: "%.0f°", dayForcast.day.avgtemp_c))
                             .fontWeight(.medium)
                             .font(.caption)
                         
-                        Text("30° c")
+                        Text(String(format: "%.0f°", dayForcast.day.avgtemp_f))
                             .fontWeight(.medium)
                             .font(.caption)
                         
@@ -52,10 +57,11 @@ struct SevenDaysForcast: View {
             }
         }
     }
-}
-
-struct SevenDaysForcast_Previews: PreviewProvider {
-    static var previews: some View {
-        SevenDaysForcast()
+    
+    
+    private func customDate(date: Date)-> String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE"
+        return dateFormatter.string(from: date)
     }
 }
