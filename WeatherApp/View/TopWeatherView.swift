@@ -8,16 +8,19 @@
 import SwiftUI
 
 struct TopWeatherView: View{
+    
     @ObservedObject var currentWeatherData: WeatherDataViewModel = WeatherDataViewModel()
+    @State var imageLoder: ImageLoader = ImageLoader()
     @State private var customLocation: String = ""
-    @State private var celsiasIsActive: Bool = false
+    @State private var celsiusIsActive: Bool = true
+    @State var image = UIImage(systemName: "cloud.fill")
     
     var body: some View{
         VStack{
             HStack{
                 TextField("Location", text: $customLocation)
                     .font(.headline)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
                 
                 Button {
                     withAnimation(.easeIn) {
@@ -36,44 +39,62 @@ struct TopWeatherView: View{
             .padding(.top, 10)
 
             Spacer(minLength: 20)
-            
+             
             HStack(spacing: 0){
                 VStack{
-                    
-                    Text("\(Int(self.currentWeatherData.responseweatherData?.current.temp_c ?? 0))°")
-                        .fontWeight(.semibold)
-                        .font(.largeTitle)
-                        .foregroundColor(.gray)
+                    HStack{
+                        
+                        if let weather = self.currentWeatherData.responseweatherData?.current{
+                            Text("\(Int(celsiusIsActive ? weather.temp_c: weather.temp_f))")
+                                .fontWeight(.semibold)
+                                .font(.largeTitle)
+                                .foregroundColor(.primary)
+                            
+                            Text(celsiusIsActive ? "°C": "°F")
+                                .fontWeight(.semibold)
+                                .font(.largeTitle)
+                                .foregroundColor(.primary)
+                                .onTapGesture {
+                                    self.celsiusIsActive.toggle()
+                                }
+                        }
+                    }
                   
                     Text(self.currentWeatherData.responseweatherData?.location.name ?? "No Region Found")
                         .fontWeight(.black)
                         .font(.title)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.primary)
                         .padding(.leading, 10)
                     
-                    Text("\(Int(self.currentWeatherData.responseweatherData?.current.temp_c ?? 0))°/\(Int(self.currentWeatherData.responseweatherData?.current.temp_f ?? 0))° Feels like \(Int(self.currentWeatherData.responseweatherData?.current.feelslike_c ?? 0))°")
-                        .fontWeight(.semibold)
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                        .padding(.leading, 10)
+                    if let weatherFeel = self.currentWeatherData.responseweatherData?.current{
+                        Text("\(Int(celsiusIsActive ? weatherFeel.temp_c: weatherFeel.temp_f))° Feels like \(Int(celsiusIsActive ? weatherFeel.feelslike_c: weatherFeel.feelslike_f))°")
+                            .fontWeight(.semibold)
+                            .font(.caption)
+                            .foregroundColor(.primary)
+                            .padding(.leading, 10)
+                    }
+                    
                     Text("\(DateFormatter.localizedString(from: self.currentWeatherData.responseweatherData?.location.localtime_epoch ?? Date(), dateStyle: .none, timeStyle: .short))")
                         .fontWeight(.semibold)
                         .font(.caption)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.primary)
                         .padding(.leading, 10)
                     
                 }.padding()
-                    
+                
                 Spacer()
                 
-                Image(systemName: "cloud.sun.fill")
+                Image(uiImage: (image ?? UIImage(systemName: "cloud.fill"))!)
                     .resizable()
                     .frame(width: 70, height: 70)
                     .foregroundColor(Color.white)
                     .padding(.trailing, 10)
-                
+                    .onReceive(imageLoder.$data) { imageData in
+                        self.image = UIImage(data: imageData)
+                    }
+                    
             }.cornerRadius(10)
-            
+
             Spacer()
             
             ScrollView(.vertical, showsIndicators: false) {
@@ -83,9 +104,9 @@ struct TopWeatherView: View{
                     .font(.callout)
                 
                 if let hourly = self.currentWeatherData.responseweatherData?.forecast.forecastday{
-                    HourlyForcast(hourlyData: hourly[0].hour)
+                    HourlyForcast(hourlyData: hourly[0].hour, celsiusIsActive: $celsiusIsActive)
                         .padding(8)
-                        .background(Color.accentColor.opacity(0.3))
+                        .background(Color.accentColor.opacity(0.6))
                         .cornerRadius(10)
                         .padding(8)
                     
@@ -98,7 +119,7 @@ struct TopWeatherView: View{
                 if let daysForcast = self.currentWeatherData.responseweatherData?.forecast{
                     SevenDaysForcast(forcastDay: daysForcast.forecastday)
                         .padding(8)
-                        .background(Color.accentColor.opacity(0.3))
+                        .background(Color.accentColor.opacity(0.6))
                         .cornerRadius(10)
                         .padding(6)
                 }
@@ -113,6 +134,10 @@ struct TopWeatherView: View{
             }
         }.onAppear{
             self.currentWeatherData.fetchedRecords()
+            self.imageLoder.loadImage(urlString: "//cdn.weatherapi.com/weather/64x64/day/116.png")
+//            if let imageUrl = self.currentWeatherData.responseweatherData?.current.condition.icon {
+//                self.imageLoder.loadImage(urlString: "//cdn.weatherapi.com/weather/64x64/day/116.png")
+//            }
         }
     }
 }

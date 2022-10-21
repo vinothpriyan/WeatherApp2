@@ -52,7 +52,7 @@ struct MoreForcasting: View {
             VStack(spacing: 10){
                 Image(systemName: "humidity")
                     .resizable()
-                    .foregroundColor(.blue)
+                    .foregroundColor(.primary)
                     .frame(width: 40, height: 40)
                 
                 Text("Humidity")
@@ -68,7 +68,7 @@ struct MoreForcasting: View {
             Spacer()
         }
         .padding()
-        .background(Color.white.opacity(0.6))
+        .background(Color.accentColor.opacity(0.6))
         .cornerRadius(10)
         .padding(6)
     }

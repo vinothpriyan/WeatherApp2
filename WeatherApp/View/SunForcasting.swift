@@ -50,7 +50,7 @@ struct SunForcasting: View {
             Spacer()
         }
         .padding()
-        .background(Color.white.opacity(0.6))
+        .background(Color.accentColor.opacity(0.6))
         .cornerRadius(10)
         .padding(6)
     }

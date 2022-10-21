@@ -11,7 +11,9 @@ struct HourlyForcast: View {
     
     let hourlyData: [HourlyData]
     @State var image: UIImage?
-
+    @Binding var celsiusIsActive: Bool
+    @State var imageLoader: ImageLoader = ImageLoader()
+    
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack{
@@ -21,12 +23,15 @@ struct HourlyForcast: View {
                             .fontWeight(.medium)
                             .font(.caption)
                         
-                        Image(systemName: "cloud.fill")
+                        Image(uiImage: image ?? UIImage(systemName: "cloud.moon.rain.fill")!)
                             .resizable()
                             .foregroundColor(.white)
                             .frame(width: 30, height: 20)
-                            
-                        Text(String(format: "%.0f°", hourlyForcast.temp_c))
+                            .onReceive(imageLoader.$data) { imageData in
+                                self.image = UIImage(data: imageData)
+                            }
+                        
+                        Text(String(format: "%.0f°", celsiusIsActive ? hourlyForcast.temp_c: hourlyForcast.temp_f))
                             .fontWeight(.medium)
                             .font(.caption)
                         
@@ -42,6 +47,9 @@ struct HourlyForcast: View {
                         }
                         
                     }.padding(8)
+                    .onAppear{
+                        self.imageLoader.loadImage(urlString: hourlyForcast.condition.icon)
+                    }
                 }
             }
         }

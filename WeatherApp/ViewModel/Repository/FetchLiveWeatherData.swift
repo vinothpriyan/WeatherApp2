@@ -10,7 +10,7 @@ import Combine
 
 public class FetchLiveWeatherData{
     
-     func fetchWeatherData(key: String = "522db6a157a748e2996212343221502", location: String, numberof days: Int = 7)->AnyPublisher<WeatherDataModel, Error>{
+     func fetchWeatherData(key: String = "522db6a157a748e2996212343221502", location: String, numberof days: Int)->AnyPublisher<WeatherDataModel, Error>{
         
          return URLSession.shared.dataTaskPublisher(for:
                                                      URL(string: "https://api.weatherapi.com/v1/forecast.json?key=\(key)&q=\(location)&days=\(days)&aqi=no&alerts=no")!)

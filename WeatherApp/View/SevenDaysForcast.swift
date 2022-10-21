@@ -10,6 +10,8 @@ import SwiftUI
 struct SevenDaysForcast: View {
     
     let forcastDay: [ForcastDay]
+    @State var imageLoader: ImageLoader = ImageLoader()
+    @State var image: UIImage?
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -31,28 +33,35 @@ struct SevenDaysForcast: View {
                             Text("\(Int(dayForcast.day.avghumidity))%")
                                 .fontWeight(.thin)
                                 .font(.system(size: 8))
-                        }.frame(minWidth: 40)
+                        }.frame(minWidth: UIScreen.main.bounds.width * 0.1)
                         
-                        Image(systemName: "cloud.drizzle.fill")
+                        Image(uiImage: image ?? UIImage(systemName: "cloud.sun.fill")!)
                             .resizable()
                             .foregroundColor(.white)
-                            .frame(width: 20, height: 20)
+                            .frame(width: 30, height: 30)
+                            .onReceive(imageLoader.$data) { imageData in
+                                self.image = UIImage(data: imageData)
+                            }
                         
-                        Image(systemName: "cloud.sun.fill")
-                            .resizable()
-                            .foregroundColor(.yellow)
-                            .frame(width: 20, height: 20)
-                        
+                        Text(String(format: "%.0f kph", dayForcast.day.maxwind_kph))
+                            .fontWeight(.medium)
+                            .font(.system(size: 10))
+                            .frame(minWidth: 20)
+                            
                         Text(String(format: "%.0f°", dayForcast.day.avgtemp_c))
                             .fontWeight(.medium)
                             .font(.caption)
+                            .frame(minWidth: 20)
                         
                         Text(String(format: "%.0f°", dayForcast.day.avgtemp_f))
                             .fontWeight(.medium)
-                            .font(.caption)
+                            .font(.system(size: 12))
+                            .frame(minWidth: 20)
                         
                     }.padding(8)
-                        
+                    .onAppear{
+                        self.imageLoader.loadImage(urlString: dayForcast.day.condition.icon)
+                    }
                 }
             }
         }

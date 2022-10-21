@@ -32,6 +32,7 @@ public class WeatherDataViewModel: ObservableObject{
             }, receiveValue: { [weak self] responsedWeatherData in
                 DispatchQueue.main.async {
                     self?.responseweatherData = responsedWeatherData
+                    print(responsedWeatherData.forecast.forecastday.count)
                 }
             })
     }
