@@ -139,6 +139,16 @@ struct TopWeatherView: View{
 //                self.imageLoder.loadImage(urlString: "//cdn.weatherapi.com/weather/64x64/day/116.png")
 //            }
         }
+        .onTapGesture {
+            hideKeyboard()
+        }
+    }
+}
+
+extension View{
+    public func hideKeyboard(){
+        let hideOnce = #selector(UIResponder.resignFirstResponder)
+        UIApplication.shared.sendAction(hideOnce, to: nil, from: nil, for: nil)
     }
 }
 
