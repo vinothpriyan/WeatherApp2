@@ -9,13 +9,28 @@ import SwiftUI
 
 struct WeatherMainView: View {
     
+    @ObservedObject var networkManager = NetworkManager()
     
     var body: some View {
         ZStack {
-           
-            TopWeatherView()
-                .background(Color.gray.opacity(0.2))
-            
+            if networkManager.networkConnected {
+                
+                TopWeatherView()
+                    .background(Color.gray.opacity(0.2))
+                
+            }else{
+                VStack{
+                    Image(systemName: "network")
+                        .resizable()
+                        .foregroundColor(Color.blue)
+                        .frame(width: 50, height: 50)
+                    
+                    Text("Your Internet Connection was failed..")
+                        .fontWeight(.semibold)
+                        .font(.body)
+                        .foregroundColor(.red)
+                }
+            }
         }
         .background(Image("weather_bg").opacity(0.7))
         .edgesIgnoringSafeArea([.leading, .trailing])

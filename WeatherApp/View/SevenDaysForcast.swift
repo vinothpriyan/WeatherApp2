@@ -67,7 +67,6 @@ struct SevenDaysForcast: View {
         }
     }
     
-    
     private func customDate(date: Date)-> String{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEE"

@@ -23,6 +23,11 @@
 		ED4E3A3128FEBD670001569B /* WeatherDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4E3A3028FEBD670001569B /* WeatherDataViewModel.swift */; };
 		ED4E3A3328FEBDA50001569B /* WeatherDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4E3A3228FEBDA50001569B /* WeatherDataModel.swift */; };
 		ED4E3A3528FEC02D0001569B /* FetchLiveWeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4E3A3428FEC02D0001569B /* FetchLiveWeatherData.swift */; };
+		EDB3ED9F2903A7CD0058FAB0 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB3ED9E2903A7CD0058FAB0 /* NetworkError.swift */; };
+		EDB3EDA12903CA220058FAB0 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB3EDA02903CA220058FAB0 /* NetworkManager.swift */; };
+		EDB3EDA32903CF430058FAB0 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDB3EDA22903CF430058FAB0 /* Launch Screen.storyboard */; };
+		EDB3EDA52903F21A0058FAB0 /* PortraitWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB3EDA42903F21A0058FAB0 /* PortraitWeatherView.swift */; };
+		EDB3EDA72903F2300058FAB0 /* LandscapWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB3EDA62903F2300058FAB0 /* LandscapWeatherView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +67,11 @@
 		ED4E3A3028FEBD670001569B /* WeatherDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataViewModel.swift; sourceTree = "<group>"; };
 		ED4E3A3228FEBDA50001569B /* WeatherDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataModel.swift; sourceTree = "<group>"; };
 		ED4E3A3428FEC02D0001569B /* FetchLiveWeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchLiveWeatherData.swift; sourceTree = "<group>"; };
+		EDB3ED9E2903A7CD0058FAB0 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		EDB3EDA02903CA220058FAB0 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		EDB3EDA22903CF430058FAB0 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		EDB3EDA42903F21A0058FAB0 /* PortraitWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitWeatherView.swift; sourceTree = "<group>"; };
+		EDB3EDA62903F2300058FAB0 /* LandscapWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapWeatherView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +168,9 @@
 				ED4E3A2A28FE82D70001569B /* SevenDaysForcast.swift */,
 				ED4E3A2C28FE8F280001569B /* SunForcasting.swift */,
 				ED4E3A2E28FE92540001569B /* MoreForcasting.swift */,
+				EDB3EDA22903CF430058FAB0 /* Launch Screen.storyboard */,
+				EDB3EDA42903F21A0058FAB0 /* PortraitWeatherView.swift */,
+				EDB3EDA62903F2300058FAB0 /* LandscapWeatherView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -191,6 +204,7 @@
 		ED4E3A2428FE5C290001569B /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				EDB3ED9E2903A7CD0058FAB0 /* NetworkError.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -198,6 +212,7 @@
 		ED4E3A2528FE5C380001569B /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				EDB3EDA02903CA220058FAB0 /* NetworkManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -306,6 +321,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDB3EDA32903CF430058FAB0 /* Launch Screen.storyboard in Resources */,
 				ED4E39FE28FE5BD70001569B /* Preview Assets.xcassets in Resources */,
 				ED4E39FB28FE5BD70001569B /* Assets.xcassets in Resources */,
 			);
@@ -335,14 +351,18 @@
 				ED4E39F928FE5BD60001569B /* WeatherMainView.swift in Sources */,
 				ED4E3A2928FE7D1E0001569B /* HourlyForcast.swift in Sources */,
 				ED4E3A2728FE70210001569B /* TopWeatherView.swift in Sources */,
+				EDB3EDA12903CA220058FAB0 /* NetworkManager.swift in Sources */,
+				EDB3EDA52903F21A0058FAB0 /* PortraitWeatherView.swift in Sources */,
 				ED4E3A3128FEBD670001569B /* WeatherDataViewModel.swift in Sources */,
 				ED4E3A2B28FE82D70001569B /* SevenDaysForcast.swift in Sources */,
 				ED2AA81D290129FB00D25126 /* ImageLoader.swift in Sources */,
 				ED4E3A3328FEBDA50001569B /* WeatherDataModel.swift in Sources */,
 				ED4E3A2F28FE92540001569B /* MoreForcasting.swift in Sources */,
 				ED4E3A3528FEC02D0001569B /* FetchLiveWeatherData.swift in Sources */,
+				EDB3ED9F2903A7CD0058FAB0 /* NetworkError.swift in Sources */,
 				ED4E3A2D28FE8F280001569B /* SunForcasting.swift in Sources */,
 				ED4E39F728FE5BD60001569B /* WeatherAppApp.swift in Sources */,
+				EDB3EDA72903F2300058FAB0 /* LandscapWeatherView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,7 +449,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -483,7 +503,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -504,9 +524,11 @@
 				DEVELOPMENT_TEAM = 6W2VTUKAAS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -537,9 +559,11 @@
 				DEVELOPMENT_TEAM = 6W2VTUKAAS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

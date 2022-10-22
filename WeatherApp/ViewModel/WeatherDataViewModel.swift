@@ -13,15 +13,13 @@ public class WeatherDataViewModel: ObservableObject{
     @Published var responseweatherData: WeatherDataModel?
     @Published var faledRespons: String?
     private var weatherJSONData = FetchLiveWeatherData()
-    private var cancelable: AnyCancellable?
-    
+    private var cancelable = Set<AnyCancellable>()
     
     public func fetchedRecords(searchLocation: String = "Chennai"){
         
-        self.cancelable = weatherJSONData.fetchWeatherData(location: searchLocation, numberof: 7)
+        weatherJSONData.fetchWeatherData(key: "522db6a157a748e2996212343221502", location: searchLocation, numberof: 7, weatherData: WeatherDataModel.self)
             .sink(receiveCompletion: { error in
                 switch error{
-                    
                 case .finished:
                     print("Request finished")
                 case .failure(let errorIs):
@@ -35,6 +33,7 @@ public class WeatherDataViewModel: ObservableObject{
                     print(responsedWeatherData.forecast.forecastday.count)
                 }
             })
+            .store(in: &cancelable)
     }
 }
 
