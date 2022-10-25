@@ -13,48 +13,56 @@ struct WeatherMainView: View {
     
     var body: some View {
         ZStack {
-            GeometryReader{ proxySize in
-                if networkManager.networkConnected{
+            if networkManager.networkConnected{
+                GeometryReader{ proxySize in
+                    
                     if proxySize.size.width < proxySize.size.height {
                         
-                        PortraitWeatherView(currentWeatherData: currentWeatherData)
+                            PortraitWeatherView(currentWeatherData: currentWeatherData)
                            
-                    }else{
-                        LandscapWeatherView(currentWeatherData: currentWeatherData, size: proxySize.size.width)
-                    }
-                }else{
-                    VStack{
-                        Image(systemName: "network")
-                            .resizable()
-                            .foregroundColor(Color.blue)
-                            .frame(width: 50, height: 50)
-                        
-                        Text("Your Internet Connection was failed..")
-                            .fontWeight(.semibold)
-                            .font(.body)
-                            .foregroundColor(.red)
-                        
-                        Button {
-                            self.networkManager.checkInternetConnection()
-                        } label: {
-                            HStack{
-                                Image(systemName: "goforward")
-                                    .resizable()
-                                    .foregroundColor(Color.white)
-                                    .frame(width: 50, height: 50)
-                                
-                                Text("Try Again")
-                                    .fontWeight(.semibold)
-                                    .font(.body)
-                                    .foregroundColor(.red)
-                            }.padding()
-                                .background(Color.accentColor)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                        }else{
+                            LandscapWeatherView(currentWeatherData: currentWeatherData, size: proxySize.size.width)
                         }
+                    }.onAppear{
+                        self.currentWeatherData.fetchedRecords()
+                }
+            }else{
+                
+                Spacer()
+                
+                VStack(spacing: 40){
+                    Image(systemName: "network")
+                        .resizable()
+                        .foregroundColor(Color.accentColor)
+                        .frame(width: 50, height: 50)
+                    
+                    Text("Your Internet Connection was failed..")
+                        .fontWeight(.semibold)
+                        .font(.body)
+                        .foregroundColor(.red)
+                    
+                    Button {
+                        self.networkManager.checkInternetConnection()
+                    } label: {
+                        HStack{
+                            Image(systemName: "goforward")
+                                .resizable()
+                                .foregroundColor(Color.primary)
+                                .frame(width: 20, height: 20)
+                            
+                            Text("Try Again")
+                                .fontWeight(.semibold)
+                                .font(.body)
+                                .foregroundColor(.primary)
+                            
+                        }.padding()
+                        .frame(height: 40)
+                        .background(Color.accentColor)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                 }
-            }.onAppear{
-                self.currentWeatherData.fetchedRecords()
+                
+                Spacer()
             }
         }
         .background(Image("weather_bg").opacity(0.7))
