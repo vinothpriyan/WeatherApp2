@@ -9,12 +9,11 @@ import SwiftUI
 
 struct PortraitWeatherView: View {
     
-    @Binding var currentWeatherData: WeatherDataViewModel
-    @Binding var imageLoder: ImageLoader
-    @Binding var customLocation: String
-    @Binding var celsiusIsActive: Bool
+    var currentWeatherData: WeatherDataViewModel
+    @State var imageLoder: ImageLoader = ImageLoader()
+    @State var customLocation: String = ""
+    @State var celsiusIsActive: Bool = true
     @State private var image: UIImage?
-    var action: ()->Void
     
     var body: some View {
         VStack{
@@ -25,7 +24,7 @@ struct PortraitWeatherView: View {
                 
                 Button {
                     withAnimation(.easeIn) {
-                        self.action()
+                        self.currentWeatherData.fetchedRecords(searchLocation: customLocation)
                     }
                 } label: {
                     Image(systemName: "magnifyingglass.circle.fill")
@@ -38,9 +37,9 @@ struct PortraitWeatherView: View {
             .cornerRadius(10)
             .padding(.horizontal, 10)
             .padding(.top, 10)
-
+            
             Spacer(minLength: 20)
-             
+            
             HStack(spacing: 0){
                 VStack{
                     HStack{
@@ -60,7 +59,7 @@ struct PortraitWeatherView: View {
                                 }
                         }
                     }
-                  
+                    
                     Text("\(self.currentWeatherData.responseweatherData?.location.name ?? "No Region Found")")
                         .fontWeight(.black)
                         .font(.title)
@@ -93,9 +92,9 @@ struct PortraitWeatherView: View {
                     .onReceive(imageLoder.$data) { imageData in
                         self.image = UIImage(data: imageData)
                     }
-                    
+                
             }.cornerRadius(10)
-
+            
             Spacer()
             
             ScrollView(.vertical, showsIndicators: false) {
@@ -134,17 +133,10 @@ struct PortraitWeatherView: View {
                 }
             }
         }.onAppear{
-            self.currentWeatherData.fetchedRecords()
-            self.imageLoder.loadImage(urlString: "//cdn.weatherapi.com/weather/64x64/day/116.png")
-           
+            self.imageLoder.loadImage(urlString: self.currentWeatherData.responseweatherData?.current.condition.icon ?? "//cdn.weatherapi.com/weather/64x64/day/143.png")
         }
         .onTapGesture {
             hideKeyboard()
         }
-    }
-    private func customDate(date: Date)-> String{
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEE"
-        return dateFormatter.string(from: date)
     }
 }

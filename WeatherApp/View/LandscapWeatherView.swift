@@ -10,13 +10,12 @@ import SwiftUI
 struct LandscapWeatherView: View {
     
     
-    @Binding var currentWeatherData: WeatherDataViewModel
-    @Binding var imageLoder: ImageLoader
-    @Binding var customLocation: String
-    @Binding var celsiusIsActive: Bool
+    var currentWeatherData: WeatherDataViewModel
+    @State var imageLoder: ImageLoader = ImageLoader()
+    @State var customLocation: String = ""
+    @State var celsiusIsActive: Bool = true
     @State private var image: UIImage?
     var size: CGFloat
-    var action: ()->Void
     
     var body: some View {
         HStack {
@@ -30,7 +29,7 @@ struct LandscapWeatherView: View {
                     
                     Button {
                         withAnimation(.easeIn) {
-                            self.action()
+                            self.currentWeatherData.fetchedRecords(searchLocation: customLocation)
                         }
                     } label: {
                         Image(systemName: "magnifyingglass.circle.fill")
@@ -140,25 +139,12 @@ struct LandscapWeatherView: View {
                     }
                 }
             }.onAppear{
-                self.currentWeatherData.fetchedRecords()
-                self.imageLoder.loadImage(urlString: "//cdn.weatherapi.com/weather/64x64/day/116.png")
-                
-//                if networkManager.networkConnected{
-//                    self.currentWeatherData.fetchedRecords()
-//                    self.imageLoder.loadImage(urlString: "//cdn.weatherapi.com/weather/64x64/day/116.png")
-//
-//                }
+                self.imageLoder.loadImage(urlString: self.currentWeatherData.responseweatherData?.current.condition.icon ?? "//cdn.weatherapi.com/weather/64x64/day/143.png")
             }
             .onTapGesture {
                 hideKeyboard()
+            }
         }
-        }
-    }
-    
-    private func customDate(date: Date)-> String{
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEE"
-        return dateFormatter.string(from: date)
     }
 }
 
