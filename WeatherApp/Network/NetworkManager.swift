@@ -15,6 +15,10 @@ class NetworkManager: ObservableObject{
     @Published var networkConnected: Bool = false
     
     init(){
+        checkInternetConnection()
+    }
+    
+    public func checkInternetConnection(){
         self.networkMonitor.pathUpdateHandler = { networkPath in
             DispatchQueue.main.async {
                 self.networkConnected = networkPath.status == .satisfied
