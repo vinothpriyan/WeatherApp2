@@ -11,7 +11,7 @@ import Combine
 public class WeatherDataViewModel: ObservableObject{
     
     @Published var responseweatherData: WeatherDataModel?
-    @Published var faledRespons: String?
+    @Published var failedRespons: String?
     private var weatherJSONData = FetchLiveWeatherData()
     private var cancelable = Set<AnyCancellable>()
     
@@ -23,7 +23,7 @@ public class WeatherDataViewModel: ObservableObject{
                 case .finished:
                     print("Request finished")
                 case .failure(let errorIs):
-                    self.faledRespons = errorIs.localizedDescription
+                    self.failedRespons = errorIs.localizedDescription
                     print("Request failed with error \(errorIs.localizedDescription)")
                 }
                 
