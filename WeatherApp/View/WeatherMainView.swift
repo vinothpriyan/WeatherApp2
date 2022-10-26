@@ -13,7 +13,7 @@ struct WeatherMainView: View {
     
     var body: some View {
         ZStack {
-            if networkManager.networkConnected{
+            if networkManager.networkConnected {
                 GeometryReader{ proxySize in
                     
                     if proxySize.size.width < proxySize.size.height {
