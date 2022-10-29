@@ -21,10 +21,11 @@ struct WeatherMainView: View {
                             PortraitWeatherView(currentWeatherData: currentWeatherData)
                            
                         }else{
+                            
                             LandscapWeatherView(currentWeatherData: currentWeatherData, size: proxySize.size.width)
                         }
-                    }.onAppear{
-                        self.currentWeatherData.fetchedRecords()
+                }.onAppear{
+                    self.currentWeatherData.fetchedRecords()
                 }
             }else{
                 
@@ -43,6 +44,7 @@ struct WeatherMainView: View {
                     
                     Button {
                         self.networkManager.checkInternetConnection()
+                        
                     } label: {
                         HStack{
                             Image(systemName: "goforward")
@@ -61,7 +63,7 @@ struct WeatherMainView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                 }
-                
+
                 Spacer()
             }
         }

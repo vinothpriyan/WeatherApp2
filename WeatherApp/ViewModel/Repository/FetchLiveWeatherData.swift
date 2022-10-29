@@ -14,9 +14,14 @@ public class FetchLiveWeatherData{
     
     func fetchWeatherData<CustomType: Decodable>(key: String, location: String, numberof days: Int, weatherData: CustomType.Type)->Future<CustomType, Error>{
         
-         return Future<CustomType, Error>{ [weak self] futureData in
-             guard let requestURL = URL(string:  "https://api.weatherapi.com/v1/forecast.json?key=\(key)&q=\(location)&days=\(days)&aqi=yes&alerts=no")
-             else {return futureData(.failure(NetworkError.invalidURL))}
+        let queryItems = [URLQueryItem(name: "key", value: key), URLQueryItem(name: "q", value: location), URLQueryItem(name: "days", value: "\(days)"), URLQueryItem(name: "aqi", value: "yes"), URLQueryItem(name: "alerts", value: "no")]
+        var urlComp = URLComponents(string: "https://api.weatherapi.com/v1/forecast.json/data/")
+        urlComp?.queryItems = queryItems
+        let baseURL = urlComp?.url
+        
+        return Future<CustomType, Error> { [weak self] futureData in
+             guard let requestURL = baseURL
+             else { return futureData(.failure(NetworkError.invalidURL)) }
              
         URLSession.shared.dataTaskPublisher(for: requestURL)
               .tryMap{(data, response)-> Data in
@@ -38,4 +43,5 @@ public class FetchLiveWeatherData{
              .store(in: &self!.cancelable)
         }
     }
+
 }

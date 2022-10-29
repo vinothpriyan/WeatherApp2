@@ -35,6 +35,7 @@ public class WeatherDataViewModel: ObservableObject{
             })
             .store(in: &cancelable)
     }
+
 }
 
 public let dateFormatted: DateFormatter = {

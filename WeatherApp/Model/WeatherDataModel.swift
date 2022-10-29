@@ -8,13 +8,13 @@
 import Foundation
 
 
-struct WeatherDataModel: Hashable, Decodable, Equatable{
+struct WeatherDataModel: Hashable, Codable, Equatable{
     let location: Location
     let current: CurrentData
     let forecast: Forcast
 }
 
-struct Location: Decodable, Hashable, Equatable{
+struct Location: Codable, Hashable, Equatable{
     let name: String
     let region: String
     let country: String
@@ -25,7 +25,7 @@ struct Location: Decodable, Hashable, Equatable{
     let localtime: String
 }
 
-struct CurrentData: Decodable, Hashable, Equatable{
+struct CurrentData: Codable, Hashable, Equatable{
     let last_updated_epoch: Date
     let last_updated: String
     let temp_c: Float
@@ -51,11 +51,11 @@ struct CurrentData: Decodable, Hashable, Equatable{
     let gust_kph: Float
 }
 
-struct Forcast: Decodable, Hashable, Equatable{
+struct Forcast: Codable, Hashable, Equatable{
     let forecastday: [ForcastDay]
 }
 
-struct ForcastDay: Decodable, Hashable, Equatable{
+struct ForcastDay: Codable, Hashable, Equatable{
     let date: String
     let date_epoch: Date
     let day: ForcastSingleDay
@@ -63,7 +63,7 @@ struct ForcastDay: Decodable, Hashable, Equatable{
     let hour: [HourlyData]
 }
 
-struct ForcastSingleDay: Decodable, Equatable, Hashable{
+struct ForcastSingleDay: Codable, Equatable, Hashable{
     let maxtemp_c: Float
     let maxtemp_f: Float
     let mintemp_c: Float
@@ -85,7 +85,7 @@ struct ForcastSingleDay: Decodable, Equatable, Hashable{
     let uv: Float
 }
 
-struct Astro: Decodable, Hashable, Equatable{
+struct Astro: Codable, Hashable, Equatable{
     let sunrise: String
     let sunset: String
     let moonrise: String
@@ -94,7 +94,7 @@ struct Astro: Decodable, Hashable, Equatable{
     let moon_illumination: String
 }
 
-struct HourlyData: Decodable, Hashable, Equatable{
+struct HourlyData: Codable, Hashable, Equatable{
     let time_epoch: Date
     let time: String
     let temp_c: Float
@@ -130,7 +130,7 @@ struct HourlyData: Decodable, Hashable, Equatable{
     let uv: Float
 }
 
-struct Conditions: Decodable, Hashable, Equatable{
+struct Conditions: Codable, Hashable, Equatable{
     let text: String
     let icon: String
     let code: Int
